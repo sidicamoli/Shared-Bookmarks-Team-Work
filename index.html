@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Shared Bookmarks</title>
   <link rel="stylesheet" href="style.css" />
 </head>
@@ -11,9 +11,9 @@
 
   <section>
     <h2>User Selection</h2>
-    <label for="user-select">Choose a user:</label>
+    <label for="user">Choose a user:</label>
     <select id="user">
-      <option value="" >Select a user...</option>
+      <option value="">Select a user...</option>
     </select>
   </section>
 
@@ -26,10 +26,20 @@
     <h2>Add New Bookmark</h2>
     <form id="bookmark-form">
       <label for="url">URL</label>
-      <input id="url" type="url" required placeholder="https://example.com" />
+      <input
+        id="url"
+        type="url"
+        required
+        placeholder="https://example.com"
+      />
 
       <label for="title">Title</label>
-      <input id="title" type="text" required placeholder="Bookmark title" />
+      <input
+        id="title"
+        type="text"
+        required
+        placeholder="Bookmark title"
+      />
 
       <label for="description">Description</label>
       <textarea id="description" required></textarea>
