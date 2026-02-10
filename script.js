@@ -68,7 +68,24 @@ function showBookmarks(userId) {
     const date = document.createElement("small");
     date.textContent = new Date(bookmark.createdAt).toLocaleString();
 
-    li.append(link, desc, date);
+    const copyBtn = document.createElement("button");
+    copyBtn.type = "button";
+    copyBtn.textContent = "Copy URL";
+
+    copyBtn.addEventListener("click",()=> {
+      navigator.clipboard.writeText(bookmark.url)
+      .then(()=>{
+        copyBtn.textContent = "Copied";
+        setTimeout(()=>{
+          copyBtn.textContent = " Copy URL";
+        },1000)
+      })
+      .catch((error) =>{
+      console.log("Copy failed:", error);
+      })
+    })
+    
+    li.append(link, desc, date, copyBtn);
     bookmarkList.appendChild(li);
   });
 }
