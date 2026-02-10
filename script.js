@@ -8,6 +8,14 @@
 import { getUserIds, getData, setData } from "./storage.js";
 import { sortBookmarksByDate } from "./utils.js";
 
+const userNames = {
+  1: "Alex Chen",
+  2: "Sam Taylor",
+  3: "Maya Patel",
+  4: "Jordan Kim",
+  5: "Mohamed Ali",
+};
+
 /* DOM elements (MATCH HTML) */
 const userSelect = document.getElementById("user");
 const bookmarkList = document.getElementById("bookmark-list");
@@ -23,7 +31,7 @@ function populateUserDropdown() {
   getUserIds().forEach((id) => {
     const option = document.createElement("option");
     option.value = id;
-    option.textContent = `User ${id}`;
+    option.textContent = userNames[id] || `User ${id}`;
     userSelect.appendChild(option);
   });
 }
