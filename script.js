@@ -48,7 +48,7 @@ function showBookmarks(userId) {
   const data = getData(userId) || [];
 
   if (data.length === 0) {
-    bookmarkList.innerHTML = "<li>No bookmarks yet</li>";
+    bookmarkList.innerHTML = '<li role="status">No bookmarks yet</li>';
     return;
   }
 
@@ -56,6 +56,8 @@ function showBookmarks(userId) {
 
   sorted.forEach((bookmark) => {
     const li = document.createElement("li");
+
+    const likes = Number(bookmark.likes || 0);
 
     const link = document.createElement("a");
     link.href = bookmark.url;
@@ -71,21 +73,42 @@ function showBookmarks(userId) {
     const copyBtn = document.createElement("button");
     copyBtn.type = "button";
     copyBtn.textContent = "Copy URL";
+    copyBtn.setAttribute("aria-label", "Copy bookmark URL");
 
-    copyBtn.addEventListener("click",()=> {
-      navigator.clipboard.writeText(bookmark.url)
-      .then(()=>{
-        copyBtn.textContent = "Copied";
-        setTimeout(()=>{
-          copyBtn.textContent = " Copy URL";
-        },1000)
-      })
-      .catch((error) =>{
-      console.log("Copy failed:", error);
-      })
-    })
-    
-    li.append(link, desc, date, copyBtn);
+    copyBtn.addEventListener("click", () => {
+      navigator.clipboard
+        .writeText(bookmark.url)
+        .then(() => {
+          copyBtn.textContent = "Copied";
+          setTimeout(() => {
+            copyBtn.textContent = "Copy URL";
+          }, 1000);
+        })
+        .catch((error) => {
+          console.log("Copy failed:", error);
+        });
+    });
+
+    const likeBtn = document.createElement("button");
+    likeBtn.type = "button";
+    likeBtn.textContent = `Like (${likes})`;
+    likeBtn.setAttribute("aria-label", "Like this bookmark");
+
+    likeBtn.addEventListener("click", () => {
+      const bookmarks = getData(userId) || [];
+
+      const updated = bookmarks.map((b) => {
+        if (b.createdAt === bookmark.createdAt) {
+          return { ...b, likes: Number(b.likes || 0) + 1 };
+        }
+        return b;
+      });
+
+      setData(userId, updated);
+      showBookmarks(userId);
+    });
+
+    li.append(link, desc, date, copyBtn, likeBtn);
     bookmarkList.appendChild(li);
   });
 }
@@ -110,6 +133,7 @@ form.addEventListener("submit", (e) => {
     title: titleInput.value,
     description: descriptionInput.value,
     createdAt: new Date().toISOString(),
+    likes: 0,
   };
 
   const existing = getData(currentUser) || [];
