@@ -1,5 +1,5 @@
 import { getUserIds, getData, setData } from "./storage.js";
-import { sortBookmarksByDate } from "./utils.js";
+import { sortBookmarksByDate, fixUrl } from "./utils.js";
 
 const userNames = {
   1: "Alex Chen",
@@ -116,10 +116,18 @@ form.addEventListener("submit", (e) => {
     return;
   }
 
+  const fixedUrl = fixUrl(urlInput.value);
+
+  if (!fixedUrl) {
+    alert("Invalid URL. Please check the address.");
+    urlInput.focus();
+    return;
+  }
+
   const newBookmark = {
-    url: urlInput.value,
-    title: titleInput.value,
-    description: descriptionInput.value,
+    url: fixedUrl,
+    title: titleInput.value.trim(),
+    description: descriptionInput.value.trim(),
     createdAt: new Date().toISOString(),
     likes: 0,
   };
