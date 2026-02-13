@@ -1,14 +1,6 @@
 import { getUserIds, getData, setData } from "./storage.js";
 import { sortBookmarksByDate, fixUrl } from "./utils.js";
 
-const userNames = {
-  1: "Alex Chen",
-  2: "Sam Taylor",
-  3: "Maya Patel",
-  4: "Jordan Kim",
-  5: "Mohamed Ali",
-};
-
 const userSelect = document.getElementById("user");
 const bookmarkList = document.getElementById("bookmark-list");
 const form = document.getElementById("bookmark-form");
@@ -22,7 +14,7 @@ function populateUserDropdown() {
   getUserIds().forEach((id) => {
     const option = document.createElement("option");
     option.value = id;
-    option.textContent = userNames[id] || `User ${id}`;
+    option.textContent = `User ${id}`;
     userSelect.appendChild(option);
   });
 }
