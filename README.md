@@ -43,15 +43,14 @@ Right-click `index.html` and choose **Open with Live Server**.
 
 ```bash
 npx http-server
-
-
+```
 ## Tests
 
 Run unit tests with:
 
 ```bash
 node --test
-
+```
 
 ## Author 
 Teamwork
