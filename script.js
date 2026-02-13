@@ -1,10 +1,3 @@
-// This is a placeholder file which shows how you can access functions defined in other files.
-// It can be loaded into index.html.
-// You can delete the contents of the file once you have understood how it works.
-// Note that when running locally, in order to open a web page which uses modules, you must serve the directory over HTTP e.g. with https://www.npmjs.com/package/http-server
-// You can't open the index.html file using a file:// URL.
-
-// Import storage functions
 import { getUserIds, getData, setData } from "./storage.js";
 import { sortBookmarksByDate } from "./utils.js";
 
@@ -16,7 +9,6 @@ const userNames = {
   5: "Mohamed Ali",
 };
 
-/* DOM elements (MATCH HTML) */
 const userSelect = document.getElementById("user");
 const bookmarkList = document.getElementById("bookmark-list");
 const form = document.getElementById("bookmark-form");
@@ -26,7 +18,6 @@ const descriptionInput = document.getElementById("description");
 
 let currentUser = "";
 
-/* Populate dropdown */
 function populateUserDropdown() {
   getUserIds().forEach((id) => {
     const option = document.createElement("option");
@@ -36,11 +27,9 @@ function populateUserDropdown() {
   });
 }
 
-/* Show bookmarks for selected user */
 function showBookmarks(userId) {
   bookmarkList.innerHTML = "";
 
-  // ✅ IMPORTANT FIX: if no user selected, show nothing
   if (!userId) {
     return;
   }
@@ -63,6 +52,7 @@ function showBookmarks(userId) {
     link.href = bookmark.url;
     link.textContent = bookmark.title;
     link.target = "_blank";
+    link.rel = "noopener noreferrer";
 
     const desc = document.createElement("p");
     desc.textContent = bookmark.description;
@@ -113,13 +103,11 @@ function showBookmarks(userId) {
   });
 }
 
-/* Handle user change */
 userSelect.addEventListener("change", () => {
   currentUser = userSelect.value;
   showBookmarks(currentUser);
 });
 
-/* Handle form submit */
 form.addEventListener("submit", (e) => {
   e.preventDefault();
 
@@ -144,5 +132,4 @@ form.addEventListener("submit", (e) => {
   showBookmarks(currentUser);
 });
 
-/* Init */
 populateUserDropdown();
